@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0080bf5545fd0bc458d39a6731498b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeTime: 4
+  chargeTime: 2
   bulletPrefab: {fileID: 1440323995433532855, guid: c33a0189fc03da340b07b6f159a2426a, type: 3}
 --- !u!114 &2111582837
 MonoBehaviour:
@@ -1872,4 +1872,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLight: {fileID: 99168731}
   minLightIntensity: 5
-  maxLightIntensity: 250
+  maxLightIntensity: 400

@@ -11,6 +11,8 @@ public class BulletTrail : Bullet
 
     Vector3 startPos;
 
+    public float TrailDistance { set => trailDistance = value; }
+
     void Update()
     {
         updateStartPosition();

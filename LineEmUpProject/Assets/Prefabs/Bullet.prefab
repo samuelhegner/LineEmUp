@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1440323995433532858}
   - component: {fileID: 1440323995433532853}
   - component: {fileID: 1440323995433532852}
+  - component: {fileID: 2249214109355548723}
   - component: {fileID: 1139427676}
   - component: {fileID: 589251305}
-  - component: {fileID: 2249214109355548723}
+  - component: {fileID: 7522722055225324395}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -116,34 +117,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1139427676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440323995433532855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7e3834de921d142920c3d775616e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletRigidbody: {fileID: 287180103287781146}
-  speed: 75
---- !u!114 &589251305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440323995433532855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b680c157f8520254f96335af54d30729, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trailLine: {fileID: 2249214109355548723}
-  trailDistance: 50
 --- !u!114 &2249214109355548723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +154,52 @@ MonoBehaviour:
     offset: 0
     spacing: 0.5
     shapeModifier: 1
+--- !u!114 &1139427676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440323995433532855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7e3834de921d142920c3d775616e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletRigidbody: {fileID: 287180103287781146}
+  speed: 75
+--- !u!114 &589251305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440323995433532855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b680c157f8520254f96335af54d30729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailLine: {fileID: 2249214109355548723}
+  trailDistance: 50
+--- !u!114 &7522722055225324395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440323995433532855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb6ff3541c1bf04cab45d20f01dcc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletLight: {fileID: 1440323995438984367}
+  minLightIntensity: 5
+  maxLightIntensity: 45
+  trail: {fileID: 589251305}
+  minTrailDistance: 10
+  maxTrailDistance: 50
 --- !u!1 &1440323995438984360
 GameObject:
   m_ObjectHideFlags: 0
