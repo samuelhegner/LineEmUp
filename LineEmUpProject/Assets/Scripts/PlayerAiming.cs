@@ -7,10 +7,10 @@ public class PlayerAiming : MonoBehaviour
     [SerializeField] Camera mainCamera;
     Vector3 aimingDirection;
 
-    private void LateUpdate()
+    private void Update()
     {
-        if(aimingDirection != Vector3.zero && aimingDirection.magnitude > 0.1f)
-            transform.forward = aimingDirection;
+        if (aimingDirection != Vector3.zero && aimingDirection.magnitude > 0.1f)
+            transform.rotation = Quaternion.LookRotation(aimingDirection, Vector3.up);
     }
 
     public void updateAimingData(Vector3 smoothAimInput) 

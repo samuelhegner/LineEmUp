@@ -42,14 +42,12 @@ public class PlayerController : MonoBehaviour
         else 
         {
             Vector2 inputAim = value.ReadValue<Vector2>();
-            Vector3 inputIn3D = new Vector3(inputAim.x, inputAim.y, (transform.position - mainCamera.transform.position).magnitude);
+            Vector3 inputIn3D = new Vector3(inputAim.x, inputAim.y, mainCamera.transform.position.y);
             Vector3 worldSpaceMousePos = mainCamera.ScreenToWorldPoint(inputIn3D);
-
+            worldSpaceMousePos.y = transform.position.y;
             Vector3 aimDirection = worldSpaceMousePos - transform.position;
-
-            Vector3 flatVector = Vector3.ProjectOnPlane(aimDirection, Vector3.up);
             
-            rawInputAim = flatVector.normalized;
+            rawInputAim = aimDirection.normalized;
         }
         
     }
@@ -81,10 +79,10 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerMovement()
     {
-        playerMovement.updateMovementData(smoothInputMovement);
+        playerMovement.updateMovementData(rawInputMovement);
     }
     private void UpdatePlayerAim()
     {
-        playerAiming.updateAimingData(smoothInputAim);
+        playerAiming.updateAimingData(rawInputAim);
     }
 }
