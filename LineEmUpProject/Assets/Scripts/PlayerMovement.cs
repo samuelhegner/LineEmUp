@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class MovePlayer : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Component References")]
     [SerializeField] private Rigidbody playerRigidbody;
@@ -12,7 +12,7 @@ public class MovePlayer : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float movementSpeed = 3f;
     
-    public Vector3 movement;
+    Vector3 movement;
     Vector3 movementDirection;
 
     void Start()
@@ -22,7 +22,7 @@ public class MovePlayer : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        movePlayer();
     }
 
     private void movePlayer()
@@ -40,13 +40,10 @@ public class MovePlayer : MonoBehaviour
 
     Vector3 CameraDirection(Vector3 movementDirection)
     {
-        var cameraForward = mainCamera.transform.forward;
+        var cameraUp = mainCamera.transform.up;
         var cameraRight = mainCamera.transform.right;
 
-        cameraForward.y = 0f;
-        cameraRight.y = 0f;
-
-        Vector3 direction = cameraForward.normalized * movementDirection.z + cameraRight.normalized * movementDirection.x;
+        Vector3 direction = cameraUp * movementDirection.z + cameraRight * movementDirection.x;
         return Vector3.ProjectOnPlane(direction, Vector3.up);
     }
 }
