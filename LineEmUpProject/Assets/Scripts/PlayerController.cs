@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 rawInputAim;
     private Vector3 smoothInputAim;
 
+    public event Action chargeDown;
+    public event Action chargeRelease;
+
+
     [SerializeField] private string currentCotrolScheme;
     private void Awake()
     {
@@ -52,6 +56,18 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public void OnCharge(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            chargeDown?.Invoke();
+        }
+        else if (value.canceled) 
+        {
+            chargeRelease?.Invoke();
+        }
+    }
+
     public void OnControlSchemeChanged() 
     {
         currentCotrolScheme = playerInput.currentControlScheme;
@@ -79,10 +95,13 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerMovement()
     {
-        playerMovement.updateMovementData(rawInputMovement);
+        playerMovement.updateMovementData(smoothInputMovement);
     }
     private void UpdatePlayerAim()
     {
-        playerAiming.updateAimingData(rawInputAim);
+        playerAiming.updateAimingData(smoothInputAim);
     }
+
+    
+    
 }
