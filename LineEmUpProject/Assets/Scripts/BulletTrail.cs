@@ -8,15 +8,45 @@ public class BulletTrail : Bullet
 {
     [SerializeField] private Line trailLine;
     [SerializeField] private float trailDistance = 100f;
+    private float trailSpeed;
+
+
 
     Vector3 startPos;
+    Vector3 lastFramePos;
+
+    bool bulletStopped;
 
     public float TrailDistance { set => trailDistance = value; }
 
+    private void OnEnable()
+    {
+        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds += finishTrail;
+    }
+    private void OnDisable()
+    {
+        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds -= finishTrail;
+    }
+
+    private void finishTrail()
+    {
+        bulletStopped = true;
+        StartCoroutine(finishTrailEnd());
+    }
+
+    private void Awake()
+    {
+        trailSpeed = GetComponent<BulletMover>().Speed;
+    }
+
     void Update()
     {
-        updateStartPosition();
-        trailLine.End = transform.InverseTransformPoint(transform.position);
+        if (!bulletStopped) 
+        {
+            updateStartPosition();
+            trailLine.End = transform.InverseTransformPoint(transform.position);
+        }
+        
     }
 
     public override void setUp(BulletSetupInfo info)
@@ -38,8 +68,19 @@ public class BulletTrail : Bullet
 
     }
 
-    void setStartPosition(Vector3 position) 
+    void setStartPosition(Vector3 position)
     {
         startPos = position;
+    }
+
+    IEnumerator finishTrailEnd()
+    {
+        while (trailLine.Start != trailLine.End)
+        {
+            startPos = transform.localPosition + (-transform.forward.normalized * trailDistance);
+            trailLine.Start = Vector3.MoveTowards(trailLine.Start, trailLine.End, trailSpeed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        Destroy(gameObject);
     }
 }

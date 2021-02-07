@@ -6,6 +6,20 @@ using UnityEngine;
 public class BulletCollision : MonoBehaviour
 {
     public event Action enemyHit;
+    private void OnEnable()
+    {
+        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds += disableColision;
+    }
+    private void OnDisable()
+    {
+        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds -= disableColision;
+    }
+
+    private void disableColision()
+    {
+        enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 7) 
