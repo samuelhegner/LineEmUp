@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 public class BulletAdjustVisuals : Bullet
 {
-    [SerializeField] private Light bulletLight;
+    [SerializeField] private HDAdditionalLightData bulletLight;
     [SerializeField] float minLightIntensity;
     [SerializeField] float maxLightIntensity;
 

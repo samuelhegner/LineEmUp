@@ -24,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 inputDirection = CameraDirection(movementDirection);
         movement = inputDirection * movementSpeed * Time.fixedDeltaTime;
-        transform.position = transform.position + movement;
+        if(BoundaryChecker.withinPlayerEdges(transform.position + movement))
+            transform.position = transform.position + movement;
     }
 
     public void updateMovementData(Vector3 smoothMovementInput)

@@ -45,15 +45,17 @@ public class PlayerController : MonoBehaviour
         }
         else 
         {
-            Vector2 inputAim = value.ReadValue<Vector2>();
-            Vector3 inputIn3D = new Vector3(inputAim.x, inputAim.y, mainCamera.transform.position.y);
-            Vector3 worldSpaceMousePos = mainCamera.ScreenToWorldPoint(inputIn3D);
-            worldSpaceMousePos.y = transform.position.y;
-            Vector3 aimDirection = worldSpaceMousePos - transform.position;
-            
-            rawInputAim = aimDirection.normalized;
-        }
-        
+            if (mainCamera != null) 
+            {
+                Vector2 inputAim = value.ReadValue<Vector2>();
+                Vector3 inputIn3D = new Vector3(inputAim.x, inputAim.y, mainCamera.transform.position.y);
+                Vector3 worldSpaceMousePos = mainCamera.ScreenToWorldPoint(inputIn3D);
+                worldSpaceMousePos.y = transform.position.y;
+                Vector3 aimDirection = worldSpaceMousePos - transform.position;
+
+                rawInputAim = aimDirection.normalized;
+            }
+        } 
     }
 
     public void OnCharge(InputAction.CallbackContext value)

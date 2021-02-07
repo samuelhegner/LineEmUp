@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerAdjustVisuals : MonoBehaviour
 {
-    [SerializeField] Light playerLight;
+    [SerializeField] HDAdditionalLightData playerLight;
     [SerializeField] float minLightIntensity;
     [SerializeField] float maxLightIntensity;
 
