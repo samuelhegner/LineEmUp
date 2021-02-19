@@ -10,6 +10,7 @@ public class BulletAdjustVisuals : Bullet
     [SerializeField] private BulletTrail trail;
     [SerializeField] float minTrailDistance;
     [SerializeField] float maxTrailDistance;
+    
     public override void setUp(BulletSetupInfo info)
     {
         bulletLight.intensity = FloatExtensions.Map(info.chargeAmmount, 0, info.maxChargeAmmount, minLightIntensity, maxLightIntensity);

@@ -38,9 +38,23 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    private void shootBullet() 
+
+    IEnumerator chargeShot() 
     {
-        GameObject newBullet = GameObject.Instantiate(bulletPrefab, transform.position, transform.rotation);
+        while (charge < chargeTime && !chargeReleasedEarly)
+        {
+            charge += Time.deltaTime;
+            updateVisuals?.Invoke(charge, chargeTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        shootBullet();
+        resetCharge(); 
+    }
+
+    private void shootBullet()
+    {
+        GameObject newBullet = GameObject.Instantiate(bulletPrefab, transform.position, transform.rotation); //TODO: Object Pool for performance
         Bullet[] componentsToSetUp = newBullet.GetComponents<Bullet>();
         for (int i = 0; i < componentsToSetUp.Length; i++)
         {
@@ -58,18 +72,5 @@ public class PlayerShoot : MonoBehaviour
         charging = null;
         charge = 0;
         updateVisuals?.Invoke(charge, chargeTime);
-    }
-
-    IEnumerator chargeShot() 
-    {
-        while (charge < chargeTime && !chargeReleasedEarly)
-        {
-            charge += Time.deltaTime;
-            updateVisuals?.Invoke(charge, chargeTime);
-            yield return new WaitForEndOfFrame();
-        }
-
-        shootBullet();
-        resetCharge(); 
     }
 }

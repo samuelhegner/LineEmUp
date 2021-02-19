@@ -7,7 +7,7 @@ using System;
 public class BulletTrail : Bullet
 {
     [SerializeField] private Line trailLine;
-    [SerializeField] private float trailDistance = 100f;
+    private float trailDistance = 100f;
     private float trailSpeed;
 
 

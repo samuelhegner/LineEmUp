@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trailLine: {fileID: 2249214109355548723}
-  trailDistance: 50
 --- !u!114 &7522722055225324395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,8 +199,8 @@ MonoBehaviour:
   minLightIntensity: 1
   maxLightIntensity: 65
   trail: {fileID: 589251305}
-  minTrailDistance: 10
-  maxTrailDistance: 50
+  minTrailDistance: 5
+  maxTrailDistance: 25
 --- !u!114 &1298995981417731583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,8 +226,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
-  widthThresold: {x: 1.05, y: -0.05}
-  heightThresold: {x: 1.05, y: -0.05}
 --- !u!1 &1440323995438984360
 GameObject:
   m_ObjectHideFlags: 0
