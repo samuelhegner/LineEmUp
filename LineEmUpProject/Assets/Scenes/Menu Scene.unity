@@ -474,6 +474,7 @@ MonoBehaviour:
   playerListContent: {fileID: 394080806}
   roomListItemPrefab: {fileID: 3287845088707778633, guid: 8b32bf36a314c4a49851020519710555, type: 3}
   playerListItemPrefab: {fileID: 7690402574345114895, guid: 74a6f41c871a5364fb88cc7882e275c5, type: 3}
+  startGameButton: {fileID: 1652273199}
 --- !u!4 &393860972
 Transform:
   m_ObjectHideFlags: 0
@@ -2779,7 +2780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &816251153
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3468,7 +3469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1135044366
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4813,7 +4814,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1652273202}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 393860971}
+        m_TargetAssemblyTypeName: Launcher, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1652273202
 MonoBehaviour:
   m_ObjectHideFlags: 0

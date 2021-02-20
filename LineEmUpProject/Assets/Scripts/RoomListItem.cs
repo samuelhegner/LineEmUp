@@ -10,6 +10,8 @@ public class RoomListItem : MonoBehaviour
 
     RoomInfo roomInfo;
 
+    public RoomInfo RoomInfo { get => roomInfo; set => roomInfo = value; }
+
     public void SetUp(RoomInfo info) 
     {
         roomInfo = info;
