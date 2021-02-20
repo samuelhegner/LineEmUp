@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public string MenuName { get => menuName; }
+    public bool IsOpen { get => isOpen;}
+
+    [SerializeField] private string menuName;
+    [SerializeField] private bool isOpen;
+
+    public void Open() 
     {
-        
+        isOpen = true;
+        gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Close() 
     {
-        
+        isOpen = false;
+        gameObject.SetActive(false);
     }
 }
