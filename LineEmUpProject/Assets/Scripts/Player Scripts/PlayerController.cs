@@ -7,13 +7,15 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] PlayerAiming playerAiming;
-    [SerializeField] Camera mainCamera;
+
 
 
     [Header("Player Input Settings")]
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private float movementSmoothingSpeed = 1f;
     [SerializeField] private float aimSmoothingSpeed = 1f;
+    [SerializeField] private string currentCotrolScheme;
+
 
     private Vector3 rawInputMovement;
     private Vector3 smoothInputMovement;
@@ -25,10 +27,13 @@ public class PlayerController : MonoBehaviour
 
     Vector2 mousePosition;
 
+    Camera mainCamera;
 
-    [SerializeField] private string currentCotrolScheme;
+
+
     private void Awake()
     {
+        mainCamera = Camera.main;
         OnControlSchemeChanged();
     }
 

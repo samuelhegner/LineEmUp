@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAiming : MonoBehaviour
 {
-    [SerializeField] Camera mainCamera;
     Vector3 aimingDirection;
 
     private void Update()

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Component References")]
-    [SerializeField] private Camera mainCamera;
 
     [Header("Movement Settings")]
     [SerializeField] private float movementSpeed = 3f;
@@ -13,7 +11,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;
     Vector3 movementDirection;
 
+    private Camera mainCamera;
 
+    private void Awake()
+    {
+        mainCamera = Camera.main;
+    }
 
     void Update()
     {
