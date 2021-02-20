@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
+using Photon.Pun;
+using System;
 
-public class PlayerAdjustVisuals : MonoBehaviour
+public class PlayerAdjustVisuals : MonoBehaviour, IPunObservable
 {
     [SerializeField] HDAdditionalLightData playerLight;
     [SerializeField] float minLightIntensity;
     [SerializeField] float maxLightIntensity;
+
+    float currentIntensity;
+
+    private void Start()
+    {
+        currentIntensity = minLightIntensity;
+    }
 
     private void OnEnable()
     {
@@ -21,6 +30,38 @@ public class PlayerAdjustVisuals : MonoBehaviour
 
     void updateLightIntensity(float charge, float maxCharge) 
     {
-        playerLight.intensity = FloatExtensions.Map(charge, 0, maxCharge, minLightIntensity, maxLightIntensity);
+        currentIntensity = FloatExtensions.Map(charge, 0, maxCharge, minLightIntensity, maxLightIntensity);
+    }
+
+    private void Update()
+    {
+        setLightIntensity(currentIntensity);
+    }
+
+    private void setLightIntensity(float currentIntensity)
+    {
+        if (currentIntensity != minLightIntensity) 
+        {
+            playerLight.intensity = Mathf.Lerp(playerLight.intensity, currentIntensity, Time.deltaTime * 20f);
+        }
+        else
+        {
+            playerLight.intensity = currentIntensity;
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
+        if (stream.IsWriting)
+        {
+            //We own this player: send the others our data
+            stream.SendNext(currentIntensity);
+        }
+        else
+        {
+            //Network player, receive data
+            currentIntensity = (float)stream.ReceiveNext();
+        }
     }
 }
