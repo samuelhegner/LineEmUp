@@ -10,6 +10,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
 
+    [SerializeField] private List<Transform> players;
+
+    public List<Transform> GetPlayers { get => players;}
+
     private void Awake()
     {
         if (Instance) 
@@ -42,5 +46,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnDisable();
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void AddPlayer(Transform newPlayer) 
+    {
+        players.Add(newPlayer);
+    }
+
+    public void RemovePlayer(Transform removedPlayer)
+    {
+        players.Remove(removedPlayer);
     }
 }

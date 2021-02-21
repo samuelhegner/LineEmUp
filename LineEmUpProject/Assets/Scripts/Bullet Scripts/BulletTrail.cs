@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Shapes;
 using System;
+using Photon.Pun;
 
 public class BulletTrail : Bullet
 {
@@ -10,6 +11,7 @@ public class BulletTrail : Bullet
     private float trailDistance = 100f;
     private float trailSpeed;
 
+    PhotonView PV;
 
 
     Vector3 startPos;
@@ -36,6 +38,7 @@ public class BulletTrail : Bullet
 
     private void Awake()
     {
+        PV = GetComponent<PhotonView>();
         trailSpeed = GetComponent<BulletMover>().Speed;
     }
 
@@ -49,12 +52,7 @@ public class BulletTrail : Bullet
         
     }
 
-    public override void setUp(BulletSetupInfo info)
-    {
-        setStartPosition(info.startingPosition);
-        trailLine.Start = transform.InverseTransformPoint(startPos);
-    }
-
+    
     private void updateStartPosition()
     {
         Vector3 toBullet = transform.position - startPos;
@@ -81,6 +79,23 @@ public class BulletTrail : Bullet
             trailLine.Start = Vector3.MoveTowards(trailLine.Start, trailLine.End, trailSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        Destroy(gameObject);
+
+        PV.RPC("RPC_DestroyBullet", RpcTarget.All);
     }
+
+    [PunRPC]
+    void RPC_DestroyBullet() 
+    {
+        if (!PV.IsMine)
+            return;
+
+        PhotonNetwork.Destroy(gameObject);
+    }
+
+    public override void setUp(BulletSetupInfo info)
+    {
+        setStartPosition(info.startingPosition);
+        trailLine.Start = transform.InverseTransformPoint(startPos);
+    }
+
 }

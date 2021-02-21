@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,16 +10,18 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private float enemyMoveSpeed;
 
 
-    private GameObject[] players;
     private Transform targetPlayer;
 
     void Awake()
     {
-        players = GameObject.FindGameObjectsWithTag("Player"); //TODO: Tags are slow, be sure to find players in a better manner
     }
 
     void FixedUpdate()
     {
+        if (RoomManager.Instance.GetPlayers.Count == 0) 
+        {
+            Destroy(gameObject);
+        }
         setPlayerTargetToClosestPlayer();
         moveToTargetedPlayer();
     }
@@ -40,16 +43,16 @@ public class EnemyMover : MonoBehaviour
     {
         float closestDistance = float.MaxValue;
 
-        Transform closestPlayer = players[0].transform;
+        Transform closestPlayer = RoomManager.Instance.GetPlayers[0].transform;
 
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < RoomManager.Instance.GetPlayers.Count; i++)
         {
-            float distanceToCurrentPlayer = Vector3.Distance(players[i].transform.position, transform.position);
+            float distanceToCurrentPlayer = Vector3.Distance(RoomManager.Instance.GetPlayers[i].transform.position, transform.position);
 
             if (playerIsCurrentClosest(distanceToCurrentPlayer, closestDistance)) //Check if the checked player is the closer than any before
             {
                 closestDistance = distanceToCurrentPlayer; //update current closest distance
-                closestPlayer = players[i].transform; //change the target to the closest player
+                closestPlayer = RoomManager.Instance.GetPlayers[i].transform; //change the target to the closest player
             }
         }
 

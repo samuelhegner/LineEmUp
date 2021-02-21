@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ public class BulletCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 7) 
+        if (other.gameObject.layer == 7)
         {
-            Destroy(other.gameObject);
+            other.GetComponent<IDamageable>()?.TakeDamage();
             enemyHit?.Invoke();
         }
     }

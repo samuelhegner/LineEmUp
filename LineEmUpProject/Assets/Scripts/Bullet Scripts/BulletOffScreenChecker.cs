@@ -5,17 +5,7 @@ using UnityEngine;
 
 public class BulletOffScreenChecker : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
-    private Vector2 widthThresold;
-    private Vector2 heightThresold;
-
     public event Action bulletOutOfBounds;
-
-    void Start()
-    {
-        mainCamera = Camera.main;
-        widthThresold.x = Screen.width + 0.05f;
-    }
 
     void Update()
     {

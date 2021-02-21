@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         mainCamera = Camera.main;
         OnControlSchemeChanged();
+        RoomManager.Instance.AddPlayer(transform);
     }
 
     public void OnMove(InputAction.CallbackContext value)
@@ -116,5 +117,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
+    private void OnDestroy()
+    {
+        RoomManager.Instance.RemovePlayer(transform);
+    }
 }
