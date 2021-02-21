@@ -136,13 +136,13 @@ MonoBehaviour:
   meshOutOfDate: 1
   blendMode: 1
   scaleMode: 0
-  color: {r: 0, g: 0, b: 0, a: 1}
+  color: {r: 0, g: 1, b: 0.8705883, a: 1}
   zTest: 4
   zOffsetFactor: 0
   zOffsetUnits: 0
   geometry: 1
   colorMode: 1
-  colorEnd: {r: 0, g: 1, b: 0.8704095, a: 1}
+  colorEnd: {r: 0, g: 0, b: 0, a: 1}
   start: {x: 0, y: 0, z: 100}
   end: {x: 0, y: 0, z: 0}
   thickness: 0.5
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletLight: {fileID: 1440323995438984366}
-  minLightIntensity: 1
+  minLightIntensity: 0
   maxLightIntensity: 65
   trail: {fileID: 589251305}
   minTrailDistance: 5
@@ -246,6 +246,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
+  - {fileID: 7522722055225324395}
   - {fileID: 4081492670244080245}
   viewIdField: 0
   InstantiationId: 0

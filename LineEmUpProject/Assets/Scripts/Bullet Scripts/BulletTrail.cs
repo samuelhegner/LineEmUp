@@ -8,18 +8,20 @@ using Photon.Pun;
 public class BulletTrail : Bullet
 {
     [SerializeField] private Line trailLine;
-    private float trailDistance = 100f;
+    private float trailDistance = 5f;
     private float trailSpeed;
-
-    PhotonView PV;
+    private PhotonView photonView;
 
 
     Vector3 startPos;
-    Vector3 lastFramePos;
+    Vector3 endPos;
 
     bool bulletStopped;
 
-    public float TrailDistance { set => trailDistance = value; }
+    public void SetTrailDistance(float distance) {
+        trailDistance = distance;
+    }
+    public PhotonView PhotonView { get => photonView; set => photonView = value; }
 
     private void OnEnable()
     {
@@ -34,8 +36,15 @@ public class BulletTrail : Bullet
 
     private void Awake()
     {
-        PV = GetComponent<PhotonView>();
+        photonView = GetComponent<PhotonView>();
         trailSpeed = GetComponent<BulletMover>().Speed;
+        startPos = transform.position;
+        endPos = transform.position;
+    }
+
+    private void Start()
+    {
+        
     }
 
     void Update()
@@ -43,61 +52,56 @@ public class BulletTrail : Bullet
         if (!bulletStopped) 
         {
             updateStartPosition();
-            trailLine.End = transform.InverseTransformPoint(transform.position);
+            updateEndPosition();
+            updateLineRender();
         }
-        
     }
 
-    
+    private void updateLineRender()
+    {
+        trailLine.End = transform.InverseTransformPoint(endPos);
+        trailLine.Start = transform.InverseTransformPoint(startPos);
+    }
+
+    private void updateEndPosition()
+    {
+        if (trailDistance <= Vector3.Distance(startPos, endPos))
+        {
+            endPos = startPos + (-transform.forward.normalized * trailDistance);
+        }
+    }
+
     private void updateStartPosition()
     {
-        Vector3 toBullet = transform.position - startPos;
-
-        if (trailDistance <= toBullet.magnitude)
-        {
-            startPos = transform.localPosition + (-transform.forward.normalized * trailDistance);
-        }
-
-        trailLine.Start = transform.InverseTransformPoint(startPos);
-
+        startPos = transform.position;
     }
 
-    void setStartPosition(Vector3 position)
-    {
-        startPos = position;
-    }
 
     IEnumerator finishTrailEnd()
     {
         while (trailLine.Start != trailLine.End)
         {
-            startPos = transform.localPosition + (-transform.forward.normalized * trailDistance);
-            trailLine.Start = Vector3.MoveTowards(trailLine.Start, trailLine.End, trailSpeed * Time.deltaTime);
+            trailLine.End = Vector3.MoveTowards(trailLine.End, trailLine.Start, trailSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
 
-        PV.RPC("RPC_DestroyBullet", RpcTarget.All);
+        photonView.RPC("RPC_DestroyBullet", RpcTarget.All);
     }
 
     [PunRPC]
     void RPC_DestroyBullet() 
     {
-        if (!PV.IsMine)
+        if (!photonView.IsMine)
             return;
 
         PhotonNetwork.Destroy(gameObject);
     }
+
+
 
     private void finishTrail()
     {
         bulletStopped = true;
         StartCoroutine(finishTrailEnd());
     }
-
-    public override void setUp(BulletSetupInfo info)
-    {
-        setStartPosition(info.startingPosition);
-        trailLine.Start = transform.InverseTransformPoint(startPos);
-    }
-
 }
