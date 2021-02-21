@@ -12,10 +12,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private TMP_Text highScoreText;
 
-    public string GetScore()
-    {
-        return highScore.ToString();
-    }
+    
 
     [SerializeField] private List<Transform> players;
 
@@ -26,15 +23,20 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public List<Transform> GetPlayers { get => players;}
 
+    PhotonView PV;
+
     private void Awake()
     {
-        if (Instance) 
+        if (Instance != null) 
         {
+            print("Duplicate Room Manager Found!");
             Destroy(gameObject);
             return;
         }
         DontDestroyOnLoad(gameObject);
         Instance = this;
+
+        PV = GetComponent<PhotonView>();
     }
 
 
@@ -52,7 +54,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    
+    public string GetScore()
+    {
+        return highScore.ToString();
+    }
 
     public override void OnDisable()
     {
@@ -75,7 +80,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (linedUpEnemies > highScore) 
         {
             highScore = linedUpEnemies;
+            PV.RPC("RPC_UpdateScore", RpcTarget.All, highScore);
             highScoreText.text = highScore.ToString();
         }
+    }
+
+    [PunRPC]
+    void RPC_UpdateScore(int score) 
+    {
+        if (!photonView.IsMine)
+            return;
+        highScore = score;
     }
 }
