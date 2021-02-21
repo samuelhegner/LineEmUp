@@ -19,6 +19,9 @@ public class BulletAdjustVisuals : Bullet, IPunObservable
     {
         lightIntensity = FloatExtensions.Map(info.chargeAmmount, 0, info.maxChargeAmmount, minLightIntensity, maxLightIntensity);
         trailLength = FloatExtensions.Map(info.chargeAmmount, 0, info.maxChargeAmmount, minTrailDistance, maxTrailDistance);
+        bulletLight.intensity = lightIntensity;
+        print("Set Light to: " + lightIntensity);
+        trail.SetTrailDistance(trailLength);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

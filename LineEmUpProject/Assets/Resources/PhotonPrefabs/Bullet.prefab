@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1440323995433532852}
   - component: {fileID: 2249214109355548723}
   - component: {fileID: 1139427676}
+  - component: {fileID: 2181973879992032639}
   - component: {fileID: 589251305}
   - component: {fileID: 7522722055225324395}
   - component: {fileID: 1298995981417731583}
@@ -119,7 +120,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2249214109355548723
 MonoBehaviour:
@@ -172,6 +173,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletRigidbody: {fileID: 287180103287781146}
   speed: 75
+--- !u!114 &2181973879992032639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440323995433532855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b125581d2dacab428cbe1c49a38782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &589251305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,8 +211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletLight: {fileID: 1440323995438984366}
-  minLightIntensity: 0
-  maxLightIntensity: 65
+  minLightIntensity: 10
+  maxLightIntensity: 100
   trail: {fileID: 589251305}
   minTrailDistance: 5
   maxTrailDistance: 25
@@ -311,7 +324,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0, g: 1, b: 0.8704095, a: 1}
-  m_Intensity: 45
+  m_Intensity: 10
   m_Range: 100
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -381,7 +394,7 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 45
+  m_Intensity: 10
   m_EnableSpotReflector: 0
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0

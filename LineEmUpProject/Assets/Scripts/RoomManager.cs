@@ -5,12 +5,18 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 using System;
 using System.IO;
+using TMPro;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
+
+    [SerializeField] private TMP_Text highScoreText;
+    [SerializeField] private List<Transform> players;
+
     public static RoomManager Instance;
 
-    [SerializeField] private List<Transform> players;
+
+    int highScore;
 
     public List<Transform> GetPlayers { get => players;}
 
@@ -56,5 +62,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void RemovePlayer(Transform removedPlayer)
     {
         players.Remove(removedPlayer);
+    }
+
+    public void AddNewScore(int linedUpEnemies) 
+    {
+        if (linedUpEnemies > highScore) 
+        {
+            highScore = linedUpEnemies;
+            highScoreText.text = highScore.ToString();
+        }
     }
 }

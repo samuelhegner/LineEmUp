@@ -24,9 +24,12 @@ public class EnemyMover : MonoBehaviour
         }
         setPlayerTargetToClosestPlayer();
         moveToTargetedPlayer();
+        rotateToFaceTarget();
     }
 
     
+
+
     /// <summary>
     /// Sets the targeted player to the closest player
     /// </summary>
@@ -88,5 +91,17 @@ public class EnemyMover : MonoBehaviour
         Vector3 toPlayer = targetPlayer.position - transform.position;
         toPlayer.y = 0; //Make sure the direction is flat to the player
         return Vector3.Normalize(toPlayer);
+    }
+
+
+    /// <summary>
+    /// Rotate the object to face the target player
+    /// </summary>
+    private void rotateToFaceTarget()
+    {
+        Vector3 toPlayer = targetPlayer.position - transform.position;
+        toPlayer.y = 0; //Make sure the direction is flat to the player
+
+        transform.rotation = Quaternion.LookRotation(toPlayer.normalized, Vector3.up);
     }
 }
