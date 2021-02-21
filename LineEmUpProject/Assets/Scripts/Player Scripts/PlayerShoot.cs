@@ -87,6 +87,7 @@ public class PlayerShoot : MonoBehaviour
         {
             GameObject newBullet = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bullet"), transform.position, transform.rotation);
             Bullet[] componentsToSetUp = newBullet.GetComponents<Bullet>();
+            
             for (int i = 0; i < componentsToSetUp.Length; i++)
             {
                 BulletSetupInfo info = new BulletSetupInfo();

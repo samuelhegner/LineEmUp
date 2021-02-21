@@ -30,11 +30,7 @@ public class BulletTrail : Bullet
         GetComponent<BulletOffScreenChecker>().bulletOutOfBounds -= finishTrail;
     }
 
-    private void finishTrail()
-    {
-        bulletStopped = true;
-        StartCoroutine(finishTrailEnd());
-    }
+   
 
     private void Awake()
     {
@@ -90,6 +86,12 @@ public class BulletTrail : Bullet
             return;
 
         PhotonNetwork.Destroy(gameObject);
+    }
+
+    private void finishTrail()
+    {
+        bulletStopped = true;
+        StartCoroutine(finishTrailEnd());
     }
 
     public override void setUp(BulletSetupInfo info)
