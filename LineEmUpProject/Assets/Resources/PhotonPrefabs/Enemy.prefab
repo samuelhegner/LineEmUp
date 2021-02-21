@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyRigidbody: {fileID: 1043541427389022399}
-  enemyMoveSpeed: 1
+  enemyMoveSpeed: 2
 --- !u!114 &5511243013467722309
 MonoBehaviour:
   m_ObjectHideFlags: 0

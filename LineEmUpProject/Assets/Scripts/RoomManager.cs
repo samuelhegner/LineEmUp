@@ -11,6 +11,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] private TMP_Text highScoreText;
+
+    public string GetScore()
+    {
+        return highScore.ToString();
+    }
+
     [SerializeField] private List<Transform> players;
 
     public static RoomManager Instance;
