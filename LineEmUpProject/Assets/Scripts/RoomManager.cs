@@ -91,5 +91,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (!photonView.IsMine)
             return;
         highScore = score;
+        highScoreText.text = score.ToString();
     }
 }

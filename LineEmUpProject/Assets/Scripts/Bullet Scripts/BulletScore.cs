@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
-public class BulletScore : MonoBehaviour
+public class BulletScore : MonoBehaviour, IPunObservable
 {
     private int score = 0;
 
@@ -25,5 +26,19 @@ public class BulletScore : MonoBehaviour
     private void AddScore() 
     {
         RoomManager.Instance.AddNewScore(score);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            //We own this player: send the others our data
+            stream.SendNext(score);
+        }
+        else
+        {
+            //Network player, receive data
+            score = (int)stream.ReceiveNext();
+        }
     }
 }
