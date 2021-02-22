@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLight: {fileID: 2954819803288888856}
-  minLightIntensity: 5
+  minLightIntensity: 25
   maxLightIntensity: 500
 --- !u!114 &2749950479318019653
 MonoBehaviour:
