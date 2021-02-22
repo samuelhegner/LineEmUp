@@ -25,6 +25,10 @@ public class EndScreenManager : MonoBehaviourPunCallbacks
         playAgainButton.SetActive(PhotonNetwork.IsMasterClient);
         backToMenu.SetActive(PhotonNetwork.IsMasterClient);
         waitingForHostText.SetActive(!PhotonNetwork.IsMasterClient);
+        
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.DestroyAll();
+        PV.RPC("RPC_DestroyRoomManager", RpcTarget.All);
     }
 
     public void LeaveMatch() 
@@ -32,7 +36,12 @@ public class EndScreenManager : MonoBehaviourPunCallbacks
         PV.RPC("RPC_DispandMatch", RpcTarget.All);
     }
 
-    public void LeaveRoom()
+    public void RestartGame() 
+    {
+        PhotonNetwork.LoadLevel("Game Scene");
+    }
+
+    private void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
     }
@@ -40,7 +49,8 @@ public class EndScreenManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_DispandMatch() 
     {
-        Destroy(RoomManager.Instance.gameObject);
+        if (!photonView.IsMine)
+            return;
         LeaveRoom();   
     }
 
@@ -54,5 +64,13 @@ public class EndScreenManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Menu Scene");
+    }
+
+    [PunRPC]
+    void RPC_DestroyRoomManager() 
+    {
+        if (!photonView.IsMine)
+            return;
+        PhotonNetwork.Destroy(RoomManager.Instance.gameObject);
     }
 }
