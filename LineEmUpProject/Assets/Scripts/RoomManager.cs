@@ -48,10 +48,21 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
     }
 
+
+    
+
     public override void OnEnable()
     {
         base.OnEnable();
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public string GetScore()
@@ -59,11 +70,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         return highScore.ToString();
     }
 
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
 
     public void AddPlayer(Transform newPlayer) 
     {
