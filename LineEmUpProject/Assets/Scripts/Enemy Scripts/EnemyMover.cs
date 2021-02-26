@@ -9,20 +9,15 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private Rigidbody enemyRigidbody;
     [SerializeField] private float enemyMoveSpeed;
 
-
     private Transform targetPlayer;
-
-    void Awake()
-    {
-    }
 
     void FixedUpdate()
     {
-        if (RoomManager.Instance.GetPlayers.Count == 0) 
+        if (RoomManager.Instance.GetPlayers.Count == 0) // if there are no players in the game, delete this enemy
         {
             Destroy(gameObject);
         }
-        setPlayerTargetToClosestPlayer();
+        setPlayerTargetToClosestPlayer(); //TODO: dont run in fixed update, not needed here (maybe in update)
         moveToTargetedPlayer();
         rotateToFaceTarget();
     }

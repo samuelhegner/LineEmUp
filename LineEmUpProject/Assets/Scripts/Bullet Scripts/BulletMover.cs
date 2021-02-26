@@ -10,6 +10,25 @@ public class BulletMover : MonoBehaviour
 
     public float Speed { get => speed;}
 
+
+
+    /// <summary>
+    /// Move bullet forward at a given speed
+    /// </summary>
+    private void FixedUpdate()
+    {
+        Vector3 movement = transform.forward * speed * Time.fixedDeltaTime;
+        bulletRigidbody.MovePosition(transform.position + movement);
+    }
+
+    /// <summary>
+    /// Stop the bullet
+    /// </summary>
+    void disableMovement() 
+    {
+        enabled = false;
+    }
+
     private void OnEnable()
     {
         GetComponent<BulletOffScreenChecker>().bulletOutOfBounds += disableMovement;
@@ -17,16 +36,5 @@ public class BulletMover : MonoBehaviour
     private void OnDisable()
     {
         GetComponent<BulletOffScreenChecker>().bulletOutOfBounds -= disableMovement;
-    }
-
-    private void FixedUpdate()
-    {
-        Vector3 movement = transform.forward * speed * Time.fixedDeltaTime;
-        bulletRigidbody.MovePosition(transform.position + movement);
-    }
-
-    void disableMovement() 
-    {
-        enabled = false;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Dependencies")]
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] PlayerAiming playerAiming;
 
@@ -38,12 +39,32 @@ public class PlayerController : MonoBehaviour
         RoomManager.Instance.AddPlayer(transform);
     }
 
+    void Update()
+    {
+        if (currentCotrolScheme != "Gamepad")
+        {
+            SetMouseAimDirection();
+        }
+        CalculateMovementInputSmoothing();
+        CalculateAimInputSmoothing();
+        UpdatePlayerMovement();
+        UpdatePlayerAim();
+    }
+
+    /// <summary>
+    /// Move action event
+    /// </summary>
+    /// <param name="value"></param>
     public void OnMove(InputAction.CallbackContext value)
     {
         Vector2 inputMovement = value.ReadValue<Vector2>();
         rawInputMovement = new Vector3(inputMovement.x, 0, inputMovement.y);
     }
 
+    /// <summary>
+    /// Aim action event
+    /// </summary>
+    /// <param name="value"></param>
     public void OnAim(InputAction.CallbackContext value)
     {
         if (currentCotrolScheme == "Gamepad")
@@ -57,6 +78,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set the aim direction for mouse input
+    /// </summary>
     void SetMouseAimDirection()
     {
         Vector3 inputIn3D = new Vector3(mousePosition.x, mousePosition.y, mainCamera.transform.position.y);
@@ -66,6 +90,10 @@ public class PlayerController : MonoBehaviour
         rawInputAim = aimDirection.normalized;
     }
 
+    /// <summary>
+    /// Charge action event
+    /// </summary>
+    /// <param name="value"></param>
     public void OnCharge(InputAction.CallbackContext value)
     {
         if (value.started)
@@ -78,39 +106,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Callback for when control scheme changes
+    /// </summary>
     public void OnControlSchemeChanged()
     {
         currentCotrolScheme = playerInput.currentControlScheme;
     }
 
-    void Update()
-    {
-        if (currentCotrolScheme != "Gamepad")
-        {
-            SetMouseAimDirection();
-        }
-        CalculateMovementInputSmoothing();
-        CalculateAimInputSmoothing();
-        UpdatePlayerMovement();
-        UpdatePlayerAim();
-    }
-
-
-
+    /// <summary>
+    /// Smooth the raw movement input
+    /// </summary>
     private void CalculateMovementInputSmoothing()
     {
         smoothInputMovement = Vector3.Lerp(smoothInputMovement, rawInputMovement, Time.deltaTime * movementSmoothingSpeed);
     }
 
+    /// <summary>
+    /// Smooth the raw aiming input
+    /// </summary>
     private void CalculateAimInputSmoothing()
     {
         smoothInputAim = Vector3.Lerp(smoothInputAim, rawInputAim, Time.deltaTime * aimSmoothingSpeed);
     }
 
+    /// <summary>
+    /// Update the player movement script with new input info
+    /// </summary>
     void UpdatePlayerMovement()
     {
         playerMovement.updateMovementData(smoothInputMovement);
     }
+
+    /// <summary>
+    /// Update the player aim script with new input info
+    /// </summary>
     private void UpdatePlayerAim()
     {
         playerAiming.updateAimingData(smoothInputAim);

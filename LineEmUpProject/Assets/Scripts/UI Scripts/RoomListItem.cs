@@ -20,6 +20,6 @@ public class RoomListItem : MonoBehaviour
 
     public void OnClicked() 
     {
-        Launcher.Instance.JoinRoom(roomInfo);
+        NetworkManager.Instance.JoinRoom(roomInfo);
     }
 }

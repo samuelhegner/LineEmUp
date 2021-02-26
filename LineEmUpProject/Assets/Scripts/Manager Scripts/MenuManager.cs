@@ -5,16 +5,21 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
 
-    [SerializeField] private Menu[] menus;
+    [SerializeField] private Menu[] menus; //all menus that can be opened and closed
 
-    public static MenuManager Instance;
+    public static MenuManager Instance; //Singleton for quick practice implementation
 
     void Awake()
     {
         Instance = this;
     }
 
-    public void OpenMenu(string menuName) 
+
+    /// <summary>
+    /// Open a menu and close the currently open menu
+    /// </summary>
+    /// <param name="menuName">Take in the name of the menu you want to open</param>
+    public void SwitchMenu(string menuName)
     {
         for (int i = 0; i < menus.Length; i++)
         {
@@ -29,7 +34,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenMenu(Menu menu) 
+
+    /// <summary>
+    /// Open a menu and close the currently open menu
+    /// </summary>
+    /// <param name="menuName">Menu to open</param>
+    public void SwitchMenu(Menu menu) 
     {
         for (int i = 0; i < menus.Length; i++)
         {

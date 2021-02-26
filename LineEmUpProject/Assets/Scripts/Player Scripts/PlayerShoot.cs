@@ -8,12 +8,15 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
+    [Header("Shooting Settings")]
     [SerializeField] private float chargeTime = 5f;
+
+    [Header("Bullet Prefabs")]
     [SerializeField] private GameObject bulletPrefab;
 
-    PhotonView PV;
+    PhotonView photonView;
 
-    public event Action<float, float> updateVisuals;
+    public event Action<float, float> updateVisuals; //event to update the player visuals when charging a shot
 
     float charge;
 
@@ -22,32 +25,24 @@ public class PlayerShoot : MonoBehaviour
     bool chargeReleasedEarly;
 
 
-    private void OnEnable()
-    {
-        if (!PV.IsMine) return;
-        PlayerController controller = GetComponent<PlayerController>();
-        controller.chargeDown += startCharge;
-        controller.chargeRelease += releaseCharge;
-    }
-
-    private void OnDisable()
-    {
-        if (!PV.IsMine) return;
-        PlayerController controller = GetComponent<PlayerController>();
-        controller.chargeDown -= startCharge;
-        controller.chargeRelease -= releaseCharge;
-    }
 
     private void Awake()
     {
-        PV = GetComponent<PhotonView>();   
+        photonView = GetComponent<PhotonView>();   
     }
 
+    /// <summary>
+    /// When the shoot button is pressed down
+    /// </summary>
     private void startCharge()
     {
         charging = StartCoroutine(chargeShot());
     }
 
+
+    /// <summary>
+    /// When the shoot button is released
+    /// </summary>
     private void releaseCharge() 
     {
         if (charging != null)
@@ -56,7 +51,21 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reset Variables for the next shot
+    /// </summary>
+    private void resetCharge()
+    {
+        chargeReleasedEarly = false;
+        charging = null;
+        charge = 0;
+        updateVisuals?.Invoke(charge, chargeTime);//update the players visuals
+    }
 
+    /// <summary>
+    /// Coroutine to charge a shot up, whilst the player holds shoot
+    /// </summary>
+    /// <returns></returns>
     IEnumerator chargeShot() 
     {
         while (charge < chargeTime && !chargeReleasedEarly)
@@ -66,32 +75,25 @@ public class PlayerShoot : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        PV.RPC("RPC_shootBullet", RpcTarget.All);
+        photonView.RPC("RPC_shootBullet", RpcTarget.All);
         resetCharge(); 
     }
 
-    
 
-    private void resetCharge()
-    {
-        chargeReleasedEarly = false;
-        charging = null;
-        charge = 0;
-        updateVisuals?.Invoke(charge, chargeTime);
-    }
 
     [PunRPC]
     private void RPC_shootBullet()
     {
-        if (PV.IsMine) 
+        if (photonView.IsMine) // if this is on the local player, shoot a bullet
         {
             Vector3 spawnPos = transform.position;
             spawnPos.y = 0.5f;
 
-            GameObject newBullet = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bullet"), spawnPos, transform.rotation);
-            Bullet[] componentsToSetUp = newBullet.GetComponents<Bullet>();
+            GameObject newBullet = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bullet"), spawnPos, transform.rotation); //Create the bullet at the spawn point
+           
+            Bullet[] componentsToSetUp = newBullet.GetComponents<Bullet>();//All of the bullet scripts that need to set up based on the charge ammount
             
-            for (int i = 0; i < componentsToSetUp.Length; i++)
+            for (int i = 0; i < componentsToSetUp.Length; i++) //Setup all of the bullets component with an information package
             {
                 BulletSetupInfo info = new BulletSetupInfo();
                 info.startingPosition = transform.position;
@@ -100,5 +102,21 @@ public class PlayerShoot : MonoBehaviour
                 componentsToSetUp[i].setUp(info);
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        if (!photonView.IsMine) return; //only allow shooting on local player
+        PlayerController controller = GetComponent<PlayerController>();
+        controller.chargeDown += startCharge;
+        controller.chargeRelease += releaseCharge;
+    }
+
+    private void OnDisable()
+    {
+        if (!photonView.IsMine) return;
+        PlayerController controller = GetComponent<PlayerController>();
+        controller.chargeDown -= startCharge;
+        controller.chargeRelease -= releaseCharge;
     }
 }

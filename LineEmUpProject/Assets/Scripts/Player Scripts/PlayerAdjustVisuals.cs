@@ -7,6 +7,7 @@ using System;
 
 public class PlayerAdjustVisuals : MonoBehaviour, IPunObservable
 {
+    [Header("Light Settings")]
     [SerializeField] HDAdditionalLightData playerLight;
     [SerializeField] float minLightIntensity;
     [SerializeField] float maxLightIntensity;
@@ -16,16 +17,6 @@ public class PlayerAdjustVisuals : MonoBehaviour, IPunObservable
     private void Start()
     {
         currentIntensity = minLightIntensity;
-    }
-
-    private void OnEnable()
-    {
-        GetComponent<PlayerShoot>().updateVisuals += updateLightIntensity;
-    }
-
-    private void OnDisable()
-    {
-        GetComponent<PlayerShoot>().updateVisuals -= updateLightIntensity;
     }
 
     void updateLightIntensity(float charge, float maxCharge) 
@@ -38,7 +29,11 @@ public class PlayerAdjustVisuals : MonoBehaviour, IPunObservable
         setLightIntensity(currentIntensity);
     }
 
-    private void setLightIntensity(float currentIntensity)
+    /// <summary>
+    /// Lerp the light intensity to the new light intensity
+    /// </summary>
+    /// <param name="currentIntensity"></param>
+    private void setLightIntensity(float currentIntensity) //created to make the light changing smoother with networking implementation
     {
         if (currentIntensity != minLightIntensity) 
         {
@@ -50,6 +45,9 @@ public class PlayerAdjustVisuals : MonoBehaviour, IPunObservable
         }
     }
 
+    //Update the visuals of the player for other players.
+    //Not sure what best practice is, in terms of using IPunObservable or using RPCs
+    //TODO: Research best practice and when to use each case
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         
@@ -63,5 +61,15 @@ public class PlayerAdjustVisuals : MonoBehaviour, IPunObservable
             //Network player, receive data
             currentIntensity = (float)stream.ReceiveNext();
         }
+    }
+
+    private void OnEnable()
+    {
+        GetComponent<PlayerShoot>().updateVisuals += updateLightIntensity;
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<PlayerShoot>().updateVisuals -= updateLightIntensity;
     }
 }

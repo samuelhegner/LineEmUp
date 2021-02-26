@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Damage the player when an ememy hits it
+/// </summary>
 public class PlayerDamager : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)

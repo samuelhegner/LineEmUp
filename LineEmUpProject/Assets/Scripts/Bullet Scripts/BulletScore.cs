@@ -2,21 +2,13 @@
 using System.Collections;
 using UnityEngine;
 
+
+/// <summary>
+/// Lets the bullet keep track of how many enemies it has hit
+/// </summary>
 public class BulletScore : MonoBehaviour, IPunObservable
 {
     private int score = 0;
-
-    private void OnEnable()
-    {
-        GetComponent<BulletCollision>().enemyHit += addToScore;
-        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds += AddScore;
-    }
-
-    private void OnDisable()
-    {
-        GetComponent<BulletCollision>().enemyHit -= addToScore;
-        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds -= AddScore;
-    }
 
     private void addToScore() 
     {
@@ -40,5 +32,18 @@ public class BulletScore : MonoBehaviour, IPunObservable
             //Network player, receive data
             score = (int)stream.ReceiveNext();
         }
+    }
+
+
+    private void OnEnable()
+    {
+        GetComponent<BulletCollision>().enemyHit += addToScore;
+        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds += AddScore;
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<BulletCollision>().enemyHit -= addToScore;
+        GetComponent<BulletOffScreenChecker>().bulletOutOfBounds -= AddScore;
     }
 }

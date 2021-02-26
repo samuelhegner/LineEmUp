@@ -2,24 +2,26 @@
 using System.Collections;
 using UnityEngine;
 
-
+/// <summary>
+/// Destroy an enemy
+/// </summary>
 public class EnemyDestroyer : MonoBehaviour, IDamageable
 {
-    PhotonView PV;
+    PhotonView photonView;
 
     private void Awake()
     {
-        PV = GetComponent<PhotonView>();
+        photonView = GetComponent<PhotonView>();
     }
     public void TakeDamage()
     {
-        PV.RPC("RPC_DestroySelf", RpcTarget.All);
+        photonView.RPC("RPC_DestroySelf", RpcTarget.All);
     }
 
     [PunRPC]
     void RPC_DestroySelf()
     {
-        if (!PV.IsMine)
+        if (!photonView.IsMine)
             return;
 
         PhotonNetwork.Destroy(gameObject);

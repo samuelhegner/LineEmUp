@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Use planes as game boundaries for the bullets and players
+/// </summary>
 public class BoundaryChecker : MonoBehaviour
 {
+    [Header("Boundaries")]
     [SerializeField] private GameObject[] playerEdges;
     [SerializeField] private GameObject[] bulletEdges;
 
@@ -33,6 +38,7 @@ public class BoundaryChecker : MonoBehaviour
         }
     }
 
+    //Check whether a world space position is withing the player boundaries
     public static bool withinPlayerEdges(Vector3 worldPosition) 
     {
         bool withinEdges = true;
@@ -45,6 +51,7 @@ public class BoundaryChecker : MonoBehaviour
         return withinEdges;
     }
 
+    //Check whether a world space position is withing the bullet boundaries
     public static bool withinBulletEdges(Vector3 worldPosition)
     {
         bool withinEdges = true;
