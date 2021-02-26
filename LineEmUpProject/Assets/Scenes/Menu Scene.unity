@@ -410,7 +410,7 @@ RectTransform:
   - {fileID: 1562712432}
   - {fileID: 632034689}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -468,11 +468,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomNameInputField: {fileID: 800300104}
-  errorText: {fileID: 1101534024}
   roomNameText: {fileID: 687509806}
+  errorText: {fileID: 1101534024}
   roomListContent: {fileID: 1101910425}
-  playerListContent: {fileID: 394080806}
   roomListItemPrefab: {fileID: 3287845088707778633, guid: 8b32bf36a314c4a49851020519710555, type: 3}
+  playerListContent: {fileID: 394080806}
   playerListItemPrefab: {fileID: 7690402574345114895, guid: 74a6f41c871a5364fb88cc7882e275c5, type: 3}
   startGameButton: {fileID: 1652273199}
 --- !u!4 &393860972
@@ -487,7 +487,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &394080805
 GameObject:
@@ -2218,7 +2218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &748984260
 GameObject:
@@ -5462,7 +5462,7 @@ Transform:
   - {fileID: 1842865497}
   - {fileID: 1687213558}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2026814666
 GameObject:
